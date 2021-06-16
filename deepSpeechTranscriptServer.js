@@ -16,7 +16,7 @@ const fs = require('fs').promises
 const path = require('path')
 const DeepSpeech = require('deepspeech')
 
-const folder = "./rec/";
+const folder = "./audio/";
 
 /**
  * deepSpeechInitialize
