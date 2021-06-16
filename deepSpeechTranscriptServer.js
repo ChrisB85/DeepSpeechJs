@@ -15,6 +15,7 @@
 const fs = require('fs').promises
 const path = require('path')
 const DeepSpeech = require('deepspeech')
+const config = require("config");
 
 const folder = "./audio/";
 
@@ -138,6 +139,19 @@ async function main() {
   // console.log(`\nusage: node ${scriptName} [<model pbmm file>] [<model scorer file>] [<audio file>]`)
   // console.log(`using: node ${scriptName} ${modelPath} ${scorerPath} ${audioFile}\n`)
 
+  var mqtt = require('mqtt');
+
+  var options = {
+    clientId: config.get('mqttClientId'),
+    username: config.get('mqttUser'),
+    password: config.get('mqttPassword'),
+    clean: true
+  };
+
+  var client = mqtt.connect(config.get('mqttHost'), options);
+  client.on("connect", function () {
+    console.log("connected");
+  });
 
   let start, end
 
@@ -165,7 +179,18 @@ async function main() {
     });
   });
 
-  router.post('/', async function (req, res) {
+  router.post('/mqtt', async function (req, res) {
+    var json = JSON.parse(req.body);
+    console.log(json);
+    res.json(json.entities);
+    var topic = json.intent.name + "/" + json.site_id;
+    var room = typeof json.slots.room != "undefined" ? "/" + json.slots.room : "" 
+    var message = json.slots.name + room;
+    console.log(`Publishing on topic ${topic} payload ${message}`);
+    client.publish(topic, message);
+  });
+
+  router.post('/sst', async function (req, res) {
     if (!fs.existsSync(folder)) {
       fs.mkdirSync(folder)
     }

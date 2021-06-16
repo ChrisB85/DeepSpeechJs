@@ -1,0 +1,6 @@
+{
+    "mqttClientId": "node",
+    "mqttHost": "mqtt://localhost",
+    "mqttUser": "",
+    "mqttPassword": ""
+}
