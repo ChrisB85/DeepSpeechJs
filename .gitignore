@@ -1,5 +1,5 @@
 audio/
-models/
+model/
 node_modules/
 
 config/default.json
