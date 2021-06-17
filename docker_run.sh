@@ -5,5 +5,5 @@ sudo docker run -d \
 -v ${PWD}/audio/:/home/deepspeech/audio/ \
 -v ${PWD}/config/:/home/deepspeech/config/ \
 -v ${PWD}/model/:/home/deepspeech/model/ \
--p 3001:3000 \
+-p 3000:3000 \
 deepspeech-server-js
