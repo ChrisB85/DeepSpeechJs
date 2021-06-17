@@ -141,16 +141,17 @@ async function main() {
 
   var mqtt = require('mqtt');
 
-  var options = {
+  var mqttHost = config.get('mqttHost');
+  var mqttOptions = {
     clientId: config.get('mqttClientId'),
     username: config.get('mqttUser'),
     password: config.get('mqttPassword'),
     clean: true
   };
 
-  var client = mqtt.connect(config.get('mqttHost'), options);
+  var client = mqtt.connect(mqttHost, mqttOptions);
   client.on("connect", function () {
-    console.log("connected");
+    console.log(`Connected to MQTT server ${mqttHost}`);
   });
 
   let start, end
@@ -204,7 +205,7 @@ async function main() {
   var server = router.listen(3000, function () {
     var host = server.address().address;
     var port = server.address().port;
-    console.log("Example app listening at http://%s:%s", host, port);
+    console.log("Web server listening at http://%s:%s", host, port);
   });
 
 }
