@@ -9,7 +9,7 @@ echo
 echo 'Test 1: deepspeech cli command'
 echo
 
-deepspeech_cli.sh 
+./deepspeech_cli.sh 
 
 sleep 5
 
